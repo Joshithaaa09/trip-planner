@@ -12,13 +12,11 @@ class CalculatorTools:
     def calculate(operation: str) -> str:
         """
         Perform safe mathematical calculations.
-
-        Supported operations include addition, subtraction,
-        multiplication, division, powers, modulo, and parentheses.
+        Supports addition, subtraction, multiplication,
+        division, powers, modulo, and parentheses.
         """
 
         try:
-
             if not isinstance(operation, str):
                 return "Error: Calculation must be provided as text."
 
@@ -27,123 +25,58 @@ class CalculatorTools:
             if not operation:
                 return "Error: Empty calculation."
 
-            # Only allow mathematical characters.
-            if not re.fullmatch(
-                r"[0-9+\-*/().% ]+",
-                operation
-            ):
-                return (
-                    "Error: Invalid characters in mathematical expression."
-                )
+            # Allow only mathematical characters.
+            if not re.fullmatch(r"[0-9+\-*/().% ]+", operation):
+                return "Error: Invalid characters in mathematical expression."
 
             allowed_operators = {
-
                 ast.Add: operator.add,
-
                 ast.Sub: operator.sub,
-
                 ast.Mult: operator.mul,
-
                 ast.Div: operator.truediv,
-
                 ast.Pow: operator.pow,
-
                 ast.Mod: operator.mod,
-
                 ast.USub: operator.neg,
-
                 ast.UAdd: operator.pos,
             }
 
-            tree = ast.parse(
-                operation,
-                mode="eval"
-            )
+            tree = ast.parse(operation, mode="eval")
 
             def evaluate(node):
 
-                if isinstance(
-                    node,
-                    ast.Expression
-                ):
+                if isinstance(node, ast.Expression):
                     return evaluate(node.body)
 
-                if isinstance(
-                    node,
-                    ast.Constant
-                ):
-                    if isinstance(
-                        node.value,
-                        (int, float)
-                    ):
+                if isinstance(node, ast.Constant):
+                    if isinstance(node.value, (int, float)):
                         return node.value
+                    raise ValueError("Invalid constant.")
 
-                    raise ValueError(
-                        "Invalid constant."
-                    )
-
-                if isinstance(
-                    node,
-                    ast.Num
-                ):
+                if isinstance(node, ast.Num):
                     return node.n
 
-                if isinstance(
-                    node,
-                    ast.BinOp
-                ):
+                if isinstance(node, ast.BinOp):
+                    left = evaluate(node.left)
+                    right = evaluate(node.right)
 
-                    left = evaluate(
-                        node.left
-                    )
-
-                    right = evaluate(
-                        node.right
-                    )
-
-                    operation_function = (
-                        allowed_operators.get(
-                            type(node.op)
-                        )
-                    )
+                    operation_function = allowed_operators.get(type(node.op))
 
                     if operation_function is None:
-                        raise ValueError(
-                            "Unsupported operator."
-                        )
+                        raise ValueError("Unsupported operator.")
 
-                    return operation_function(
-                        left,
-                        right
-                    )
+                    return operation_function(left, right)
 
-                if isinstance(
-                    node,
-                    ast.UnaryOp
-                ):
+                if isinstance(node, ast.UnaryOp):
+                    operand = evaluate(node.operand)
 
-                    operand = evaluate(
-                        node.operand
-                    )
-
-                    operation_function = (
-                        allowed_operators.get(
-                            type(node.op)
-                        )
-                    )
+                    operation_function = allowed_operators.get(type(node.op))
 
                     if operation_function is None:
-                        raise ValueError(
-                            "Unsupported operator."
-                        )
+                        raise ValueError("Unsupported operator.")
 
-                    return operation_function(
-                        operand
-                    )
+                    return operation_function(operand)
 
-                raise ValueError(
-                    "Invalid mathematical expression."
-                )
+                raise ValueError("Invalid mathematical expression.")
 
             result = evaluate(tree)
 
@@ -152,12 +85,7 @@ class CalculatorTools:
         except ZeroDivisionError:
             return "Error: Division by zero."
 
-        except (
-            SyntaxError,
-            ValueError,
-            TypeError
-        ) as error:
-
+        except (SyntaxError, ValueError, TypeError) as error:
             return f"Error: {error}"
 
         except Exception:
