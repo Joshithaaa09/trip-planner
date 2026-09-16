@@ -1,8 +1,88 @@
+# AI Trip Planner
 
-**AI Crew for Trip Planning** is a project built using the **CrewAI framework**, which allows multiple AI agents to collaborate and perform complex tasks efficiently. In this project, AI agents work together to help users plan a trip when they are unsure between different destination options.
+An AI-powered multi-agent travel planning system built with Python, CrewAI, and Ollama. The application researches destinations, gathers local information, and generates personalized travel itineraries based on the user's preferences.
 
-Each agent has a specific role, such as researching cities, gathering useful travel insights, and creating a detailed travel itinerary based on the user’s preferences. The agents communicate and coordinate through the CrewAI framework to analyze destinations, collect information about attractions, and generate a structured travel plan.
+## Overview
 
-The project consists of several key components. The **main.py** file runs the program and coordinates the workflow. The **trip_agents.py** file defines the AI agents and their roles, while **trip_tasks.py** contains the tasks and prompts assigned to those agents. The project also includes tool files such as **browser_tools.py**, which enables agents to search and gather information from the internet, and **calculator_tools.py**, which allows agents to perform calculations when needed.
+AI Trip Planner uses a multi-agent architecture where each agent has a specialized responsibility in the travel-planning process.
 
-Overall, this project demonstrates how autonomous AI agents can collaborate using the CrewAI framework to automate research, decision-making, and planning processes, ultimately generating a complete trip itinerary for the user.
+The user provides:
+
+- Starting location
+- Destination options
+- Travel dates
+- Interests and preferences
+
+The system then processes this information through a sequence of specialized agents to produce a detailed travel plan.
+
+The project uses Ollama to run the language model locally, allowing the application to operate without relying on paid OpenAI API credits.
+
+## Features
+
+- Multi-agent travel planning using CrewAI
+- Destination comparison and selection
+- Internet-based travel research
+- Local destination information
+- Attraction and activity recommendations
+- Restaurant recommendations
+- Hotel recommendations
+- Transportation suggestions
+- Weather and seasonal considerations
+- Packing recommendations
+- Budget estimation
+- Day-by-day itinerary generation
+- Safe mathematical calculations
+- Local LLM execution using Ollama
+
+## Architecture
+
+The application follows a sequential multi-agent workflow:
+
+```text
+User Input
+    |
+    v
+City Selection Agent
+    |
+    v
+Destination Research
+    |
+    v
+Local Expert Agent
+    |
+    v
+Local Destination Research
+    |
+    v
+Travel Concierge Agent
+    |
+    v
+Itinerary Generation
+    |
+    v
+Final Travel Plan
+## Tech Stack
+
+### Languages
+- Python
+
+### AI & Agent Framework
+- CrewAI
+- Ollama
+- Llama 3.2 1B
+
+### Web & Data Retrieval
+- DuckDuckGo Search
+- Python `urllib`
+- HTML parsing and text extraction
+
+### Libraries & Tools
+- python-dotenv
+- Unstructured
+- Python AST
+- Operator
+
+### Development Tools
+- Git
+- GitHub
+- Visual Studio Code
