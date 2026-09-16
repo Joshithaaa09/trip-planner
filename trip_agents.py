@@ -1,10 +1,15 @@
-from crewai import Agent
+from crewai import Agent,LLM
 
 from browser_tools import BrowserTools, SearchTools
 from calculator_tools import CalculatorTools
 
 
 class TripAgents:
+    def __init__(self):
+        self.llm = LLM(
+            model="ollama/llama3.2:1b",
+            base_url="http://localhost:11434"
+        )
 
     def city_selection_agent(self):
         return Agent(
@@ -21,6 +26,7 @@ class TripAgents:
                 SearchTools.search_internet,
                 BrowserTools.scrape_and_summarize_website,
             ],
+            llm=self.llm,
             verbose=True,
         )
 
@@ -39,6 +45,8 @@ class TripAgents:
                 SearchTools.search_internet,
                 BrowserTools.scrape_and_summarize_website,
             ],
+
+            llm=self.llm,
             verbose=True,
         )
 
@@ -58,5 +66,7 @@ class TripAgents:
                 BrowserTools.scrape_and_summarize_website,
                 CalculatorTools.calculate,
             ],
+
+            llm=self.llm,
             verbose=True,
         )
