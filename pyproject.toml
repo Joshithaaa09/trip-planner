@@ -1,0 +1,32 @@
+[project]
+name = "trip-planner-crew"
+version = "1.0.0"
+description = "AI-powered multi-agent trip planner using CrewAI"
+authors = [
+    { name = "Joshitha" }
+]
+
+requires-python = ">=3.10,<3.13"
+
+dependencies = [
+    "crewai>=0.152.0",
+    "python-dotenv>=1.0.0"
+]
+
+
+[tool.ruff]
+select = [
+    "E",
+    "W",
+    "F",
+    "I",
+    "B",
+    "C4",
+    "SIM"
+]
+
+ignore = [
+    "W291",
+    "W292",
+    "W293"
+]
