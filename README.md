@@ -61,6 +61,9 @@ Itinerary Generation
     |
     v
 Final Travel Plan
+
+
+```
 ## Tech Stack
 
 ### Languages
